@@ -1,0 +1,10 @@
+vagrant/.vagrant
+wp-*
+!wp-content
+wp-content/*
+!wp-content/themes
+wp-content/themes/*
+index.php
+license.txt
+readme.html
+xmlrpc.php

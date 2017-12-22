@@ -1,0 +1,35 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+HOSTNAME="test.cbc"
+DIR="commbible"
+URL="https://#{HOSTNAME}"
+PHP="7.0"
+SITENAME="Community Bible Chapel"
+ARGS = [HOSTNAME, DIR, URL, PHP, SITENAME]
+SCRIPTS = [
+  'install',
+  'nginx',
+  'wordpress',
+  'restart',
+]
+
+Vagrant.configure("2") do |config|
+  config.vm.define "testcbc" do |v|
+    v.vm.box = "bento/ubuntu-16.04"
+
+    v.vm.network "private_network", ip: "192.168.12.35"
+
+    for key in SCRIPTS
+      privileged = key != 'wordpress'
+      v.vm.provision "shell" do |s| 
+        s.path = "provisioning/#{key}.sh"
+        s.args = ARGS
+        s.privileged = privileged
+      end
+    end
+    v.vm.synced_folder "../", "/var/www/#{DIR}",
+      owner: "vagrant", group: "www-data"
+    v.vm.hostname = HOSTNAME
+  end
+end

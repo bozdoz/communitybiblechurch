@@ -1,0 +1,14 @@
+{
+  "name": "communitybiblechapel",
+  "version": "1.0.0",
+  "description": "WordPress for Community Bible Chapel, Tantallon",
+  "main": "index.js",
+  "scripts": {
+  	"start": "cd ./vagrant && vagrant up",
+  	"ssh": "cd ./vagrant && vagrant ssh",
+  	"destroy": "cd ./vagrant && vagrant destroy -f",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Benjamin J DeLong <howaboutben@gmail.com> (https://bozdoz.com)",
+  "license": "MIT"
+}
