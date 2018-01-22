@@ -1,9 +1,12 @@
+node_modules/
 vagrant/.vagrant
 wp-*
 !wp-content
 wp-content/*
 !wp-content/themes
 wp-content/themes/*
+!wp-content/themes/commbible
+wp-content/themes/commbible/style.css
 index.php
 license.txt
 readme.html

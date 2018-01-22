@@ -3,7 +3,7 @@
 
 HOSTNAME="test.cbc"
 DIR="commbible"
-URL="https://#{HOSTNAME}"
+URL="http://#{HOSTNAME}"
 PHP="7.0"
 SITENAME="Community Bible Chapel"
 ARGS = [HOSTNAME, DIR, URL, PHP, SITENAME]
@@ -17,8 +17,10 @@ SCRIPTS = [
 Vagrant.configure("2") do |config|
   config.vm.define "testcbc" do |v|
     v.vm.box = "bento/ubuntu-16.04"
-
     v.vm.network "private_network", ip: "192.168.12.35"
+    v.vm.synced_folder "../", "/var/www/#{DIR}",
+      owner: "vagrant", group: "www-data"
+    v.vm.hostname = HOSTNAME
 
     for key in SCRIPTS
       privileged = key != 'wordpress'
@@ -28,8 +30,9 @@ Vagrant.configure("2") do |config|
         s.privileged = privileged
       end
     end
-    v.vm.synced_folder "../", "/var/www/#{DIR}",
-      owner: "vagrant", group: "www-data"
-    v.vm.hostname = HOSTNAME
+
+    v.vm.provision "shell", privileged: false, inline: <<-EOF
+      echo "Server is LIVE at #{URL} !"
+    EOF
   end
 end

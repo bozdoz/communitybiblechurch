@@ -40,6 +40,7 @@ wp config create \
 	--dbpass=${DBPASS} \
 	--extra-php <<PHP
 define('FS_METHOD','direct');
+define('WP_DEBUG', true);
 PHP
 
 # 
@@ -48,15 +49,16 @@ PHP
 wp core install \
 	--url=$URL \
 	--title="${SITENAME}" \
-	--admin_user=bozdoz \
-	--admin_password=whoReallyCar3s \
-	--admin_email=howaboutben@gmail.com \
+	--admin_user=admin \
+	--admin_password=password \
+	--admin_email=nobody@example.com \
 	--skip-email
 
 # 
 # activate theme 
 # 
 wp theme install twentyseventeen
+wp theme activate commbible
 
 # activate child theme
 # wp theme activate twentyseventeen
@@ -64,12 +66,26 @@ wp theme install twentyseventeen
 # 
 # plugins
 # 
-wp plugin install nginx-cache --activate
-wp option update nginx_cache_path /var/www/${DIR}_cache/
-#
+wp plugin install gutenberg --activate
+# wp plugin install nginx-cache --activate
+# wp option update nginx_cache_path /var/www/${DIR}_cache/
+
 # test post
 #
-# wp post create \
-# 	--post_title='What is Vagrant and why should I care?' \
-# 	--post_content='<p>OK, I totally get it now<p>' \
-# 	--post_status=publish
+wp post create \
+	--post_title='About' \
+	--post_content='<p>About us<p>' \
+	--post_status=publish
+	--post_type=page
+
+wp post create \
+	--post_title='News' \
+	--post_content='<p>News for what matters<p>' \
+	--post_status=publish
+	--post_type=page
+
+wp post create \
+	--post_title='Contact' \
+	--post_content='<p>Contact us<p>' \
+	--post_status=publish
+	--post_type=page
