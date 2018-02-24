@@ -8,7 +8,8 @@
     "ssh": "cd ./vagrant && vagrant ssh",
     "provision": "cd ./vagrant && vagrant provision",
     "destroy": "cd ./vagrant && vagrant destroy -f",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "gulp build"
   },
   "author": "Benjamin J DeLong <howaboutben@gmail.com> (https://bozdoz.com)",
   "license": "MIT",
@@ -18,5 +19,6 @@
     "gulp-autoprefixer": "^4.1.0",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.6.3"
-  }
+  },
+  "dependencies": {}
 }

@@ -3,6 +3,7 @@ var gulp            = require('gulp'),
     sass            = require('gulp-sass'),
     autoprefixer    = require('gulp-autoprefixer'),
     sourcemaps      = require('gulp-sourcemaps'),
+    cleanCSS        = require('gulp-clean-css'),
     theme_dir       = './wp-content/themes/commbible/';
 
 gulp.task('default', ['sass', 'browser-sync', 'watch']);
@@ -40,9 +41,7 @@ gulp.task('watch', function() {
 
 gulp.task('build', function() {
     return gulp.src(theme_dir + 'style.scss')
-        .pipe(sass({
-            outputStyle: "compressed"
-        }).on('error', errorHandler))
+        .pipe(sass().on('error', errorHandler))
         .pipe(autoprefixer())
         .pipe(gulp.dest(theme_dir));
 });
