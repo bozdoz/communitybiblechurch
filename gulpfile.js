@@ -3,7 +3,6 @@ var gulp            = require('gulp'),
     sass            = require('gulp-sass'),
     autoprefixer    = require('gulp-autoprefixer'),
     sourcemaps      = require('gulp-sourcemaps'),
-    cleanCSS        = require('gulp-clean-css'),
     theme_dir       = './wp-content/themes/commbible/';
 
 gulp.task('default', ['sass', 'browser-sync', 'watch']);
