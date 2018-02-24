@@ -14,4 +14,4 @@ sudo debconf-set-selections <<< 'mariadb-server mysql-server/root_password_again
 
 sudo apt-get install -y curl nginx
 sudo apt-get install -y mariadb-server
-sudo apt-get install -y php php-fpm php-mysql php-pear php-xml
+sudo apt-get install -y php php-fpm php-mysql php-pear php-xml php-gd

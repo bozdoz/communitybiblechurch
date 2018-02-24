@@ -1,5 +1,5 @@
 <?php
-function my_theme_enqueue_styles() {
+function commbible_enqueue_styles() {
 	// get parent style
     wp_enqueue_style( 'twentyseventeen-style', get_template_directory_uri() . '/style.css' );
     // get child style
@@ -9,8 +9,7 @@ function my_theme_enqueue_styles() {
         wp_get_theme()->get('Version')
     );
 }
-add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles' );
-
+add_action( 'wp_enqueue_scripts', 'commbible_enqueue_styles' );
 
 /* google schema */
 

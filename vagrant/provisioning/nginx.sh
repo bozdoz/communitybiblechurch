@@ -45,6 +45,8 @@ server {
     root /var/www/$DIR;
     index index.php;
 
+    client_max_body_size 10M;
+
     # set \$skip_cache 0;
     # if (\$request_method = POST) {set \$skip_cache 1;}
     # if (\$query_string != "") {set \$skip_cache 1;}

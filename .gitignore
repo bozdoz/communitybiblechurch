@@ -1,5 +1,6 @@
 node_modules/
 vagrant/.vagrant
+vagrant/*.log
 wp-*
 !wp-content
 wp-content/*
