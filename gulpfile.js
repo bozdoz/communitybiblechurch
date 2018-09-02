@@ -1,14 +1,14 @@
-var gulp            = require('gulp'),
-    browserSync     = require('browser-sync').create(),
-    sass            = require('gulp-sass'),
-    autoprefixer    = require('gulp-autoprefixer'),
-    sourcemaps      = require('gulp-sourcemaps'),
-    theme_dir       = './wp-content/themes/commbible/';
+var gulp         = require('gulp'),
+    browserSync  = require('browser-sync').create(),
+    sass         = require('gulp-sass'),
+    autoprefixer = require('gulp-autoprefixer'),
+    sourcemaps   = require('gulp-sourcemaps'),
+    theme_dir    = './wp-content/themes/commbible/';
 
 gulp.task('default', ['sass', 'browser-sync', 'watch']);
 
 gulp.task('sass', function() {
-    return gulp.src(theme_dir + 'style.scss')
+    return gulp.src(theme_dir + 'commbible-style.scss')
         .pipe(sourcemaps.init())
         .pipe(sass().on('error', errorHandler))
         .pipe(autoprefixer())
@@ -26,7 +26,7 @@ gulp.task('browser-sync', function() {
         ];
     browserSync.init({
         files : files,
-        proxy: 'test.cbc',
+        proxy: 'http://localhost:8091',
         port: '3001',
         online : false,
         notify : false,
@@ -39,7 +39,7 @@ gulp.task('watch', function() {
 });
 
 gulp.task('build', function() {
-    return gulp.src(theme_dir + 'style.scss')
+    return gulp.src(theme_dir + 'commbible-style.scss')
         .pipe(sass().on('error', errorHandler))
         .pipe(autoprefixer())
         .pipe(gulp.dest(theme_dir));
