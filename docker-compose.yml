@@ -1,0 +1,55 @@
+version: '3.3'
+
+services:
+  db:
+    image: mariadb
+    volumes:
+      - wp_db:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-whocares}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-wordpress}
+      MYSQL_USER: ${MYSQL_USER:-wordpress}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-wordpress}
+
+  wordpress:
+    # build: .
+    image: wordpress:latest
+    depends_on:
+      - db
+    volumes:
+      - .:/var/www/html
+    ports:
+      - ${WORDPRESS_PORT:-80}:80
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST:-db:3306}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE:-wordpress}
+      WORDPRESS_DB_USER: ${MYSQL_USER:-wordpress}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD:-wordpress}
+
+  cli:
+    image: wordpress:cli
+    depends_on:
+      - wordpress
+    volumes: 
+      - .:/var/www/html
+    command: /bin/sh ./docker-install.sh
+    environment:
+      WORDPRESS_PORT: ${WORDPRESS_PORT:-80}
+      TITLE: ${TITLE:-Community Bible Chapel}
+      THEME: commbible
+      ADMIN_USER: ${ADMIN_USER:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-password}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-not@real.com}
+      WP_DEBUG: ${WP_DEBUG:-true}
+
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin:latest
+  #   ports:
+  #     - 8080:80
+  #   depends_on:
+  #     - db
+
+volumes:
+  wp_db:
