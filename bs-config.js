@@ -7,7 +7,8 @@
   "ui": false,
   "files": [
     './wp-content/**/*.php',
-    './wp-content/**/*.js'
+    './wp-content/**/*.js',
+    './wp-content/**/*.css'
   ],
   "watchEvents": [
       "change"
@@ -18,7 +19,7 @@
       "ignoreInitial": true
   },
   "server": false,
-  "proxy": 'localhost:8091',
+  "proxy": 'localhost:8095',
   "port": 3001,
   "notify": false
 };
