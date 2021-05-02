@@ -278,3 +278,12 @@ $select_bg: $secondary;
 h1, h2, h3, h4, h5, h6 {
 	padding: 0.5em 0 0;
 }
+
+button {
+	margin-top: 1em;
+	background: hsl($brand_hue, 45%, 22%);
+	
+	&:hover {
+		background: hsl($brand_hue, 48%, 18%);
+	}
+}
