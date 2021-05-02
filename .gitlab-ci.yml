@@ -1,0 +1,36 @@
+variables:
+  GIT_DEPTH: 5
+
+stages:
+  - pull
+  - npm
+  - deploy
+
+image: bozdoz/fabric-deployment:1.0.1
+
+pull:
+  stage: pull
+  script:
+    - fab gitpull
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+
+npm:
+  stage: npm
+  script:
+    - fab npmci
+  rules:
+    - if: '$CI_COMMIT_BRANCH != "master"'
+      when: never
+    - changes:
+      - package-lock.json
+
+deploy:
+  stage: deploy
+  script:
+    - fab npmbuild
+  environment:
+    name: production
+    url: https://communitybiblechapel.ca
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
