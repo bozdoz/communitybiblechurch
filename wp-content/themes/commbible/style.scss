@@ -217,13 +217,16 @@ h1, h2, h3, h4, h5, h6 {
 			// reverse
 			background-color: hsl($brand_hue, 40%, 30%);
 			
+			* {
+				color: hsl($brand_hue, 10%, 95%) !important;
+			}
 			&,
-			h2, 
+			h2,
 			p,
 			.entry-title,
 			a,
-			label, {
-				color: hsl($brand_hue, 20%, 90%) !important;
+			label {
+				color: hsl($brand_hue, 20%, 85%) !important;
 			}
 		}
 		.panel-content {
@@ -270,4 +273,8 @@ $select_bg: $secondary;
 
 .site-footer {
 	margin-top: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	padding: 0.5em 0 0;
 }
