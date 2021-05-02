@@ -1,24 +1,26 @@
 {
   "name": "communitybiblechapel",
   "version": "1.0.0",
-  "description": "WordPress for Community Bible Chapel, Tantallon",
-  "main": "index.js",
+  "description": "Services Every Sunday at 10am",
+  "private": true,
   "scripts": {
-    "start": "cd ./vagrant && vagrant up",
-    "ssh": "cd ./vagrant && vagrant ssh",
-    "provision": "cd ./vagrant && vagrant provision",
-    "destroy": "cd ./vagrant && vagrant destroy -f",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "gulp build"
+    "start": "docker-compose up -d && npm run watch",
+    "build": "npm-run-all -p build:*",
+    "build:css": "sass wp-content/themes/commbible/style.scss --style=compressed | postcss -u autoprefixer -o wp-content/themes/commbible/style.css --no-map",
+    "watch": "npm-run-all -p watch:*",
+    "watch:css": "sass wp-content/themes/commbible/style.scss wp-content/themes/commbible/style.css --watch",
+    "watch:proxy": "browser-sync start --config bs-config.js"
   },
-  "author": "Benjamin J DeLong <howaboutben@gmail.com> (https://bozdoz.com)",
+  "author": "Benjamin J DeLong <ben@bozdoz.com> (https://bozdoz.com)",
   "license": "MIT",
   "devDependencies": {
-    "browser-sync": "^2.23.5",
-    "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^4.1.0",
-    "gulp-sass": "^3.1.0",
-    "gulp-sourcemaps": "^2.6.3"
+    "autoprefixer": "^10.0.1",
+    "browser-sync": "^2.26.13",
+    "npm-run-all": "^4.1.5",
+    "postcss-cli": "^8.1.0",
+    "sass": "^1.27.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "postcss": "^8.2.13"
+  }
 }

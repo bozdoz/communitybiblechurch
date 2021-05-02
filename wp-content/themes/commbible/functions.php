@@ -7,7 +7,7 @@ function commbible_enqueue_styles() {
     wp_enqueue_style( 'twentyseventeen-style', get_template_directory_uri() . '/style.css' );
     // get child style
     wp_enqueue_style( 'child-style',
-        get_stylesheet_directory_uri() . '/commbible-style.css',
+        get_stylesheet_directory_uri() . '/style.css',
         array( 'twentyseventeen-style' ),
         wp_get_theme()->get('Version')
 	);
@@ -34,6 +34,17 @@ function commbible_enqueue_styles() {
 	wp_localize_script( 'twentyseventeen-skip-link-focus-fix', 'twentyseventeenScreenReaderText', $twentyseventeen_l10n );
 }
 add_action( 'wp_enqueue_scripts', 'commbible_enqueue_styles' );
+
+if ( ! function_exists( 'commbible_posted_on' ) ) :
+	/**
+	 * Prints HTML with meta information for the current post-date/time and author.
+	 */
+	function commbible_posted_on() {
+		// Finally, let's write all of this to the page.
+		echo '<span class="posted-on">' . twentyseventeen_time_link() . '</span>';
+	}
+endif;
+
 
 /* google schema */
 
@@ -157,67 +168,77 @@ function displayTeam () {
     return ob_get_clean();
 }
 
-function custom_post_project() {
+function custom_post_video() {
 	$labels = array(
-		'name'               => _x( 'Projects', 'post type general name' ),
-		'singular_name'      => _x( 'Project', 'post type singular name' ),
+		'name'               => _x( 'Videos', 'post type general name' ),
+		'singular_name'      => _x( 'Video', 'post type singular name' ),
 		'add_new'            => _x( 'Add New', 'book' ),
-		'add_new_item'       => __( 'Add New Project' ),
-		'edit_item'          => __( 'Edit Project' ),
-		'new_item'           => __( 'New Project' ),
-		'all_items'          => __( 'All Projects' ),
-		'view_item'          => __( 'View Project' ),
-		'search_items'       => __( 'Search Projects' ),
-		'not_found'          => __( 'No projects found' ),
-		'not_found_in_trash' => __( 'No projects found in the Trash' ), 
+		'add_new_item'       => __( 'Add New Video' ),
+		'edit_item'          => __( 'Edit Video' ),
+		'new_item'           => __( 'New Video' ),
+		'all_items'          => __( 'All Videos' ),
+		'view_item'          => __( 'View Video' ),
+		'search_items'       => __( 'Search Videos' ),
+		'not_found'          => __( 'No Videos found' ),
+		'not_found_in_trash' => __( 'No Videos found in the Trash' ), 
 		'parent_item_colon'  => '',
-		'menu_name'          => 'Projects'
+		'menu_name'          => 'Videos'
 	);
 	$args = array(
 		'labels'        => $labels,
-		'description'   => 'Holds our Projects and Project specific data',
+		'description'   => 'Holds our Videos and Video specific data',
 		'public'        => true,
 		'menu_position' => 5,
-		'supports'      => array( 'title', 'editor', 'thumbnail', 'excerpt', 'comments' ),
+		'supports'      => array( 'title', 'editor', 'excerpt' ),
 		'has_archive'   => true,
+		'with_front'    => true,
 	);
-	register_post_type( 'project', $args );	
+	register_post_type( 'video', $args );	
 }
-add_action( 'init', 'custom_post_project' );
+add_action( 'init', 'custom_post_video' );
 
-/* size */
-add_action( 'add_meta_boxes', 'project_size_box' );
-function project_size_box() {
-    add_meta_box( 
-        'project_size_box',
-        'Date',
-        'project_size_box_content',
-        'project',
-        'side',
-        'high'
-    );
-}
+function meta_box_custom_content( $atts=Array() ) {
+	extract($atts);
+	
+	$input_type = empty($input_type) ? "text" : $input_type;
 
-function meta_box_custom_content ( $post_type, $text, $id, $input_type="text", $default = "") {
-	$name = $post_type . '_' . $text;
-	$value = get_post_meta( $id, $name, true );
+	$value = get_post_meta( $post_id, $name, true );
 
 	if (!$value) {
-		$value = $default;
+		$value = empty($default) ? '' : $default;
 	}
 	?>	
 	<input type="<?php echo $input_type; ?>" 
 		id="<?php echo $name; ?>"
 		value="<?php echo $value; ?>"
 		name="<?php echo $name; ?>"
-		placeholder="enter a <?php echo $text ?>" />
+		placeholder="<?php echo empty($placeholder) ? '' : $placeholder; ?>" />
 	<?php
 }
 
-function project_size_box_content( $post ) {
-	wp_nonce_field( basename( __FILE__ ), 'project_size_box_content_nonce' );
+/* link */
+add_action( 'add_meta_boxes', 'video_link_box' );
+function video_link_box() {
+    add_meta_box( 
+        'video_link_box',
+        'YT Link',
+        'video_link_box_content',
+        'video',
+        'side',
+        'high'
+    );
+}
+
+function video_link_box_content( $post ) {
+	wp_nonce_field( basename( __FILE__ ), 'video_link_box_content_nonce' );
 	
-	meta_box_custom_content('project', 'size', $post->ID, 'date', date('Y-m-d'));
+	$atts = Array(
+		'name' => 'video_link',
+		'post_id' => $post->ID,
+		'placeholder' => 'YouTube URL',
+	);
+	
+	meta_box_custom_content($atts);
 }
 
 /* 
@@ -225,26 +246,25 @@ function project_size_box_content( $post ) {
 */
 
 $custom_meta_box_names = Array(
-	'project_size'
+	'video_link',
 );
 
-add_action( 'save_post', 'project_price_box_save' );
-function project_price_box_save( $post_id ) {
-	
+add_action( 'save_post', 'video_price_box_save' );
+function video_price_box_save( $post_id ) {
+	global $custom_meta_box_names;
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) 
 		return;
 
 	/* verify just one is enough? */
-	if (!isset($_POST['project_size_box_content_nonce']))
+	$first = $custom_meta_box_names[0];
+	if (!isset($_POST[$first . '_box_content_nonce']))
 		return;
 
-	if (!wp_verify_nonce( $_POST['project_size_box_content_nonce'], basename( __FILE__ ) ) )
+	if (!wp_verify_nonce( $_POST[$first . '_box_content_nonce'], basename( __FILE__ ) ) )
 		return;
 
 	if ( !current_user_can( 'edit_post', $post_id ) )
 		return;
-
-	global $custom_meta_box_names;
 	
 	foreach ($custom_meta_box_names as $name) {
 		if (isset($_POST[$name])) {
