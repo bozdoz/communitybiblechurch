@@ -12,6 +12,9 @@
  * @version 1.0
  */
 
+// number before the main page
+$before_home = 2;
+
 get_header(); ?>
 
 <div id="primary" class="content-area">
@@ -29,7 +32,7 @@ get_header(); ?>
 			 *
 			 * @param int $num_sections Number of front page sections.
 			 */
-			$num_sections = 1;
+			$num_sections = $before_home;
 
 			// Create a setting and control for each of the sections available in the theme.
 			for ( $i = 1; $i < ( 1 + $num_sections ); $i++ ) {
@@ -66,7 +69,7 @@ get_header(); ?>
 			$num_sections = apply_filters( 'twentyseventeen_front_page_sections', 4 );
 
 			// Create a setting and control for each of the sections available in the theme.
-			for ( $i = 2; $i < ( 1 + $num_sections ); $i++ ) {
+			for ( $i = $before_home; $i < ( 1 + $num_sections ); $i++ ) {
 				$twentyseventeencounter = $i;
 				twentyseventeen_front_page_section( null, $i );
 			}
