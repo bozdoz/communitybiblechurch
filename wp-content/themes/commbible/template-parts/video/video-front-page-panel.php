@@ -7,6 +7,8 @@
     <?php
       get_template_part( 'template-parts/video/video', 'first-query' );
     
+      // TODO: this should just be the archive page:
+      // https://communitybiblechapel.ca/video/
       $page = get_page_by_title( 'All Videos' );
 				
       if ($page): ?>

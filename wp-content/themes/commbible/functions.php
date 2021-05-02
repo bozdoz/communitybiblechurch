@@ -186,7 +186,7 @@ function custom_post_video() {
 	);
 	$args = array(
 		'labels'        => $labels,
-		'description'   => 'Holds our Videos and Video specific data',
+		'description'   => 'Our Recorded Services',
 		'public'        => true,
 		'menu_position' => 5,
 		'supports'      => array( 'title', 'editor', 'excerpt' ),
