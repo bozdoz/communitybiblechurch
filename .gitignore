@@ -8,7 +8,7 @@ wp-content/*
 wp-content/themes/*
 !wp-content/themes/commbible
 wp-content/themes/commbible/style.css
-wp-content/themes/commbible/commbible-style.css
+wp-content/themes/commbible/style.css.map
 index.php
 license.txt
 readme.html
