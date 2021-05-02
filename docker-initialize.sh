@@ -1,11 +1,7 @@
 #!/bin/sh
 
 wp theme install twentyseventeen
-# wp theme activate commbible
-wp plugin install gutenberg --activate
-
-# wp plugin install nginx-cache --activate
-# wp option update nginx_cache_path /var/www/cache/
+wp theme activate commbible
 
 wp post create --post_type=page \
     --post_title='About' \

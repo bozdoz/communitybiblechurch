@@ -8,7 +8,7 @@
   $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
  
   $args = array(
-    'posts_per_page' => 2,// query last 2 posts  
+    'posts_per_page' => 3,
     'post_type' => 'video', 
     'paged' => $paged
   );
