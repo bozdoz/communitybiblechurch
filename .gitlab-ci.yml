@@ -29,6 +29,13 @@ deploy:
   stage: deploy
   script:
     - fab npmbuild
+  after_script:
+    - apk add curl
+    - |
+      curl "https://api.cloudflare.com/client/v4/zones/$CF_ZONE/purge_cache" \
+      -H "Authorization: Bearer $CF_TOKEN" \
+      -H "Content-Type: application/json" \
+      -d "{\"purge_everything\": true}"
   environment:
     name: production
     url: https://communitybiblechapel.ca
