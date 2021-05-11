@@ -25,15 +25,15 @@ $header_font: 'Open Sans';
 /* legibility */
 body, button, input, textarea {
 	background-color: white;
-    color: #43454b;
-    line-height: 1.618;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    font-weight: 400;
-    font-size: 18px;
-    letter-spacing: -0.001em;
-    word-spacing: 0.03em;
+	color: #43454b;
+	line-height: 1.618;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	font-weight: 400;
+	font-size: 18px;
+	letter-spacing: -0.001em;
+	word-spacing: 0.03em;
 }
 
 $para_color: hsla($brand_hue, 10%, 10%, 0.8);
@@ -213,6 +213,14 @@ h1, h2, h3, h4, h5, h6 {
 // page content
 #content {
 	.twentyseventeen-panel {
+		input[type="tel"], 
+		input[type="url"],
+		input[type="text"],
+		input[type="email"],
+		textarea {
+			width: 100% !important;
+		}
+
 		&:nth-child(even) {
 			// reverse
 			background-color: hsl($brand_hue, 40%, 30%);
@@ -227,6 +235,14 @@ h1, h2, h3, h4, h5, h6 {
 			a,
 			label {
 				color: hsl($brand_hue, 20%, 85%) !important;
+			}
+
+			input[type="tel"], 
+			input[type="url"],
+			input[type="text"],
+			input[type="email"],
+			textarea {
+				color: #43454b !important;
 			}
 		}
 		.panel-content {
