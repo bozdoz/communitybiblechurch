@@ -7,7 +7,7 @@ wp-content/*
 !wp-content/themes
 wp-content/themes/*
 !wp-content/themes/commbible
-wp-content/themes/commbible/style.css
+!wp-content/themes/commbible/style.css
 wp-content/themes/commbible/style.css.map
 index.php
 license.txt
@@ -15,3 +15,4 @@ readme.html
 xmlrpc.php
 .htaccess
 .env
+.DS_Store

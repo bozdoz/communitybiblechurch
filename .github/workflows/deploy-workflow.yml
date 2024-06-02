@@ -1,0 +1,23 @@
+name: DeployWorkflow
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    container:
+      image: bozdoz/fabric-deployment:1.1.0
+      env:
+        FAB_CWD: ${{ secrets.FAB_CWD }}
+        FAB_HOST: ${{ secrets.FAB_HOST }}
+        FAB_PORT: ${{ secrets.FAB_PORT }}
+        FAB_USER: ${{ secrets.FAB_USER }}
+        FAB_PASSWORD: ${{ secrets.FAB_PASSWORD }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Deploy
+        run: fab gitpull dockercomposeup
