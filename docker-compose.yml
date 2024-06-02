@@ -35,6 +35,11 @@ services:
       - wordpress:/var/www/html
       - ./wp-content/themes:/var/www/html/wp-content/themes
       - ./docker-initialize.sh:/app/initialize.sh
+    environment:
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_USER: ${MYSQL_USER:-wordpress}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD:-wordpress}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE:-wordpress}
 
   # phpmyadmin:
   #   image: phpmyadmin/phpmyadmin
