@@ -3,7 +3,8 @@ services:
     image: mariadb:11.4
     volumes:
       - wp_db:/var/lib/mysql
-    restart: always
+      - ./mysql-init:/docker-entrypoint-initdb.d
+    restart: on-failure:3
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-whocares}
       MYSQL_DATABASE: ${MYSQL_DATABASE:-wordpress}
@@ -16,10 +17,10 @@ services:
       - cli
     volumes:
       - wordpress:/var/www/html
-      - ./wp-content/themes:/var/www/html/wp-content/themes
+      - ./wp-content:/var/www/html/wp-content
     ports:
       - ${WP_PORT:-80}:80
-    restart: always
+    restart: on-failure:3
     environment:
       WORDPRESS_DB_HOST: mysql
       WORDPRESS_DB_USER: ${MYSQL_USER:-wordpress}
@@ -49,8 +50,8 @@ services:
   #     - mysql
   #   environment:
   #     PMA_HOST: mysql
-  #     PMA_USER: ${MYSQL_USER:-root}
-  #     PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD:-whocares}
+  #     PMA_USER: ${MYSQL_USER:-wordpress}
+  #     PMA_PASSWORD: ${MYSQL_PASSWORD:-wordpress}
 
 volumes:
   wp_db:

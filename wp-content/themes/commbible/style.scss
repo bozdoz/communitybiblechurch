@@ -310,3 +310,11 @@ button {
 		box-shadow: 0 0 0 2px hsl($brand_hue, 58%, 80%);
 	}
 }
+
+.wrap {
+	width: 99%;
+}
+
+.site-branding .wrap {
+	width: initial;
+}

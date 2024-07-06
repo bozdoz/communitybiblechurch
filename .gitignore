@@ -16,3 +16,5 @@ xmlrpc.php
 .htaccess
 .env
 .DS_Store
+
+mysql-init/
