@@ -13,6 +13,7 @@ services:
 
   wordpress:
     image: wordpress:6.5-php8.2
+    env_file: .env
     depends_on:
       - cli
     volumes:
@@ -22,6 +23,7 @@ services:
       - ${WP_PORT:-80}:80
     restart: on-failure:3
     environment:
+      WORDPRESS_DEBUG: ${WP_DEBUG:-false}
       WORDPRESS_DB_HOST: mysql
       WORDPRESS_DB_USER: ${MYSQL_USER:-wordpress}
       WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD:-wordpress}

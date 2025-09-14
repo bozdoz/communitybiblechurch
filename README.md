@@ -4,7 +4,7 @@ Copy DB
 (remote)
 
 ```sh
-mysqldump -u lydi -p --databases lydi > lydi.sql
+mysqldump --skip-column-statistics -h mysql -u lydi -p --databases lydi > lydi.sql
 ```
 
 Copy static files
@@ -13,4 +13,10 @@ Copy static files
 ```sh
 scp remote:/path/to/lydi.sql ./
 scp remote:/home/lydi/wp-content ./
+```
+
+Make superuser:
+
+```sh
+docker run --rm cli wp user create admin not@real.com --role=administrator --user_pass=password
 ```
